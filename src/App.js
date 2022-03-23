@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Product from "./components/Product";
 import Routes from "./Routes";
 import "./styles.css";
 
@@ -21,6 +19,7 @@ export default function App() {
         <h1>My Subscription</h1>
       </div>
       <div className="components">
+
         {/* <Product/> */}
         <Routes/>
       </div>
