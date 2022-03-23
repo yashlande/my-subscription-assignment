@@ -1,0 +1,79 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.App {
+  font-family: sans-serif;
+}
+
+.heading {
+  text-align: center;
+  background-color: #d8d8d8;
+  height: 40px;
+}
+
+.components {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 10px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  /* background-color: red; */
+  width: 20vw;
+}
+
+.btngrp {
+  display: inline-flex;
+  background-color: #d8d8d8;
+  width: max-content;
+  border-radius: 20%;
+}
+
+.btngrp button {
+  width: 40px;
+  height: 30px;
+  background-color: #d8d8d8;
+  border: none;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+.btngrp p {
+  position: relative;
+  top: 6px;
+}
+
+.cu_check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #d8d8d8;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.weekday {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.btn-sup {
+  position: relative;
+  top: 10px;
+  height: 30px;
+  color: white;
+  background-color: #333333;
+  border: none;
+}
+
