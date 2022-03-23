@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
-import {useHistory} from 'react-router-dom'
-import {addProduct} from './../Redux/productSlice'
+import { useHistory } from 'react-router-dom'
+import { addProduct } from './../Redux/productSlice'
 import { useDispatch } from "react-redux";
 // import {
 //     TextField, Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, InputLabel, MenuItem, FormGroup,
@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 
 function Product() {
 
-    const history=useHistory();
-    const dispatch=useDispatch();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     const [errors, setErrors] = React.useState({
         errorMsg: ''
@@ -23,6 +23,7 @@ function Product() {
     const product_list = [
         {
             id: 1,
+            imgPath:'https://www.cardiosmart.org/images/default-source/news-article-images/70545718.tmb-dtl-news-a.jpg?sfvrsn=b5c370e0_2',
             name: 'Cow Milk',
             brand: 'Chitale',
             details: '500 ml Pouch',
@@ -30,6 +31,7 @@ function Product() {
         },
         {
             id: 2,
+            imgPath:'https://www.bigbasket.com/media/uploads/p/xxl/40195005_2-popular-brown-bread.jpg',
             name: 'Brown Bread',
             brand: 'Fresho',
             details: '200 g',
@@ -37,6 +39,7 @@ function Product() {
         },
         {
             id: 3,
+            imgPath:'https://cdn.shopify.com/s/files/1/0906/2558/products/sugar-cosmetics-serial-sipper-watter-bottle-28150750314579.jpg?v=1619156235',
             name: 'Water',
             brand: 'Bislari',
             details: '1 ltr',
@@ -109,27 +112,27 @@ function Product() {
         );
     })
 
-    const handleStartSubscription=()=>{
+    const handleStartSubscription = () => {
 
-        if(fullProdData.name===''){
+        if (fullProdData.name === '') {
             setErrors({
                 ...errors,
-                errorMsg:'Please Select Product'
+                errorMsg: 'Please Select Product'
             })
-        }else if(quantity===0){
+        } else if (quantity === 0) {
             setErrors({
                 ...errors,
-                errorMsg:'Please select quantity'
+                errorMsg: 'Please select quantity'
             })
-        }else if(weekDay.Fr===false && weekDay.Mo===false && weekDay.Sa===false && weekDay.Su===false && weekDay.Th===false && weekDay.Tu===false &&weekDay.We===false){
+        } else if (weekDay.Fr === false && weekDay.Mo === false && weekDay.Sa === false && weekDay.Su === false && weekDay.Th === false && weekDay.Tu === false && weekDay.We === false) {
             setErrors({
                 ...errors,
-                errorMsg:'Please select day'
+                errorMsg: 'Please select day'
             })
         }
-        else{
-            const finalData={
-                productDet:{...fullProdData},
+        else {
+            const finalData = {
+                productDet: { ...fullProdData },
                 quantity,
                 weekDay
             }
@@ -141,38 +144,39 @@ function Product() {
     return (
         <>
             {/* {console.log(fullProdData)} */}
-            <div className="product">
-                <b>Product</b>
-                <select name="name" value={prodData.name} onChange={(e) => handleFormData(e)} style={{ padding: '5px' }}>
-                    <option value='' disabled>-Select Product-</option>
-                    {
-                        product_list.map((i, j) => {
-                            return <option key={i.id} value={i.name}>{i.name}</option>
-                        })
-                    }
-                </select>
+            <div className="product_container">
+                <div className="product">
+                    <b>Product</b>
+                    <select name="name" value={prodData.name} onChange={(e) => handleFormData(e)} style={{ padding: '5px' }}>
+                        <option value='' disabled>-Select Product-</option>
+                        {
+                            product_list.map((i, j) => {
+                                return <option key={i.id} value={i.name}>{i.name}</option>
+                            })
+                        }
+                    </select>
 
-                <b>Quantity</b>
-                <div className="btngrp">
-                    <button className="qty" onClick={(e) => handleQuantity('sub')}>-</button>
-                    <p>{quantity}</p>
-                    <button className="qty" onClick={(e) => handleQuantity('add')}>+</button>
+                    <b>Quantity</b>
+                    <div className="btngrp">
+                        <button className="qty" onClick={(e) => handleQuantity('sub')}>-</button>
+                        <p>{quantity}</p>
+                        <button className="qty" onClick={(e) => handleQuantity('add')}>+</button>
+                    </div>
+
+                    <b>Schedule</b>
+                    <div className="weekday">
+                        {
+                            checklist
+                        }
+                    </div>
+
+                    <button className="btn-sup" onClick={(e) => handleStartSubscription()}>Start Subscription</button>
+                    <div style={{ color: 'red' }}>
+                        {errors.errorMsg}
+                    </div>
                 </div>
 
-                <b>Schedule</b>
-                <div className="weekday">
-                    {
-                        checklist
-                    }
-                </div>
-
-                <button className="btn-sup" onClick={(e)=>handleStartSubscription()}>Start Subscription</button>
-                <div style={{color:'red'}}>
-                    {errors.errorMsg}
-                </div>
             </div>
-
-
         </>
     )
 }

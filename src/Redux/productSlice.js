@@ -2,10 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   productRecords: [],
-  updateInfo: {
-    status: false,
-    index: -1
-  }
 }
 
 export const productSlice = createSlice({
