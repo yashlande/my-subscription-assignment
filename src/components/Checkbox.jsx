@@ -14,7 +14,7 @@ function Checkbox({ weekName, handleClick, checked }) {
     }
 
     return (
-        <div className='cu_check' onClick={(e) => handleClick(weekName, checked)} style={checked?check:uncheck}>
+        <div className='checkbox' onClick={(e) => handleClick(weekName, checked)} style={checked?check:uncheck}>
             {weekName[0]}
         </div>
     )
