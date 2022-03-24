@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 function SubscriptionList() {
 
+    const history = useHistory();
     const state = useSelector(state => state);
 
     const style = {
@@ -18,24 +19,23 @@ function SubscriptionList() {
         position: 'fixed',
     };
 
-    const sampleData = {
-        imgPath: 'https://www.cardiosmart.org/images/default-source/news-article-images/70545718.tmb-dtl-news-a.jpg?sfvrsn=b5c370e0_2',
-        name: 'sample name',
-        price: 25,
-        qty: 2
+    const blankMessage = () => {
+        return (
+            <div className="noSubscription">
+                You do not have any active subscription
+            </div>
+        )
     }
-
-    const history = useHistory();
 
     return (
         <>
             {/* <div>SubscriptionList</div> */}
-            {state.products.productRecords.length>0 &&
-                state.products.productRecords.map((item,index)=>{
-                    return(
-                        <ProductCard key={index} data={item}/>
+            {state.products.productRecords.length > 0 ?
+                state.products.productRecords.map((item, index) => {
+                    return (
+                        <ProductCard key={index} data={item} />
                     )
-                })
+                }) : blankMessage()
             }
             <Fab className='fab' color="primary" aria-label="add" style={style} onClick={() => history.push('/addnew')}>
                 <AddIcon />

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
 import { useHistory } from 'react-router-dom'
 import { addProduct } from './../Redux/productSlice'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "./Breadcrumb";
-// import {
-//     TextField, Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, InputLabel, MenuItem, FormGroup,
-//     Checkbox, Select, Autocomplete, Button, Snackbar, Alert
-// } from '@mui/material';
+
 
 function Product() {
 
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const state = useSelector(state => state.products.productRecords);
+
+    // console.log("Product State =", state)
 
     const [errors, setErrors] = React.useState({
         errorMsg: ''
@@ -20,7 +21,6 @@ function Product() {
 
     const [quantity, setQuantity] = useState(0)
 
-    // const product_list=['Cow-Milk', 'Brown Bred','Water'];
     const product_list = [
         {
             id: 1,
@@ -86,9 +86,10 @@ function Product() {
             ...product_list.find(x => x.name === event.target.value)
         })
 
-        // if (errors.fnameError === true && event.target.name === 'fullName') {
-        //     setErrors({ ...errors, fnameError: false })
-        // }
+        setErrors({
+            ...errors,
+            errorMsg: ''
+        })
     }
 
     const handleQuantity = (param) => {
@@ -97,13 +98,23 @@ function Product() {
         } else {
             quantity > 0 ? setQuantity(quantity - 1) : null;
         }
+
+        setErrors({
+            ...errors,
+            errorMsg: ''
+        })
     }
 
     const handleCheckBox = (weekName, checkStatus) => {
-        console.log(`${weekName} ${checkStatus}`)
+        // console.log(`${weekName} ${checkStatus}`)
         setWeekDay({
             ...weekDay,
             [weekName]: !checkStatus,
+        })
+
+        setErrors({
+            ...errors,
+            errorMsg: ''
         })
     }
 
@@ -112,6 +123,8 @@ function Product() {
             <Checkbox key={key} weekName={`${key}`} checked={value} handleClick={handleCheckBox} />
         );
     })
+
+    const alreadyInList = state.length > 0 ? state.some((x) => x.productDet.id === fullProdData.id) : false;
 
     const handleStartSubscription = () => {
 
@@ -132,13 +145,21 @@ function Product() {
             })
         }
         else {
-            const finalData = {
-                productDet: { ...fullProdData },
-                quantity,
-                weekDay
+            if(alreadyInList===false){
+                const finalData = {
+                    productDet: { ...fullProdData },
+                    quantity,
+                    weekDay
+                }
+                // console.log("Already in List =", alreadyInList)
+                dispatch(addProduct(finalData))
+                history.push('/')
+            }else{
+                setErrors({
+                    ...errors,
+                    errorMsg: 'You have already subscribed this product.'
+                })
             }
-            dispatch(addProduct(finalData))
-            history.push('/')
         }
     }
 
