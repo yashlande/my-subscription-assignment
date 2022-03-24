@@ -112,13 +112,13 @@ function Product() {
 
     const alreadyInList = state.length > 0 ? state.some((x) => x.productDet.id === fullProdData.id) : false;
 
-    const isDaySelected = Object.entries(weekDay).map(([key,value])=>{
-        if(value===true){
+    const isDaySelected = Object.entries(weekDay).map(([key, value]) => {
+        if (value === true) {
             return true
-        }else{
+        } else {
             return false
         }
-    }).some(x=>x===true);
+    }).some(x => x === true);
 
     const handleStartSubscription = () => {
         if (fullProdData.name === '') {
@@ -131,15 +131,15 @@ function Product() {
                 ...errors,
                 errorMsg: 'Please select quantity'
             })
-        } 
-        else if (isDaySelected===false) {
+        }
+        else if (isDaySelected === false) {
             setErrors({
                 ...errors,
                 errorMsg: 'Please select day'
             })
         }
         else {
-            if(alreadyInList===false){
+            if (alreadyInList === false) {
                 const finalData = {
                     productDet: { ...fullProdData },
                     quantity,
@@ -147,13 +147,20 @@ function Product() {
                 }
                 dispatch(addProduct(finalData))
                 history.push('/')
-            }else{
+            } else {
                 setErrors({
                     ...errors,
                     errorMsg: 'You have already subscribed this product.'
                 })
             }
         }
+    }
+
+    const handleSelectAllDay = () => {
+        Object.keys(weekDay).forEach(key => {
+            setWeekDay({ ...weekDay, ...weekDay[key]= true })
+        });
+        setWeekDay({...weekDay,Su:true});
     }
 
     return (
@@ -180,8 +187,9 @@ function Product() {
                         <p>{quantity}</p>
                         <button className="qty" onClick={(e) => handleQuantity('add')}>+</button>
                     </div>
-
-                    <b>Schedule</b>
+                    <div>
+                        <b>Schedule</b> <button className="selectAllDay" onClick={(e) => handleSelectAllDay()}><u>Select All Day</u></button>
+                    </div>
                     <div className="weekday">
                         {
                             checklist
@@ -189,7 +197,7 @@ function Product() {
                     </div>
 
                     <button className="btn-sup" onClick={(e) => handleStartSubscription()}>Start Subscription</button>
-                    <div style={{ color: 'red',marginTop:'10px' }}>
+                    <div style={{ color: 'red', marginTop: '10px' }}>
                         <b>{errors.errorMsg}</b>
                     </div>
                 </div>

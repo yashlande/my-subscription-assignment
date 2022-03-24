@@ -57,6 +57,15 @@
   top: 6px;
 }
 
+.selectAllDay{
+  width: 100px;
+  height: 30px;
+  background-color: white;
+  border: none;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
 .checkbox {
   display: flex;
   justify-content: center;
@@ -66,6 +75,7 @@
   border-radius: 50%;
   background-color: #d8d8d8;
   border: 1px solid black;
+  font-size: small;
   cursor: pointer;
 }
 
