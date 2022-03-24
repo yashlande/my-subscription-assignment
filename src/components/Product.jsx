@@ -112,8 +112,15 @@ function Product() {
 
     const alreadyInList = state.length > 0 ? state.some((x) => x.productDet.id === fullProdData.id) : false;
 
-    const handleStartSubscription = () => {
+    const isDaySelected = Object.entries(weekDay).map(([key,value])=>{
+        if(value===true){
+            return true
+        }else{
+            return false
+        }
+    }).some(x=>x===true);
 
+    const handleStartSubscription = () => {
         if (fullProdData.name === '') {
             setErrors({
                 ...errors,
@@ -124,7 +131,8 @@ function Product() {
                 ...errors,
                 errorMsg: 'Please select quantity'
             })
-        } else if (weekDay.Fr === false && weekDay.Mo === false && weekDay.Sa === false && weekDay.Su === false && weekDay.Th === false && weekDay.Tu === false && weekDay.We === false) {
+        } 
+        else if (isDaySelected===false) {
             setErrors({
                 ...errors,
                 errorMsg: 'Please select day'
@@ -137,7 +145,6 @@ function Product() {
                     quantity,
                     weekDay
                 }
-                // console.log("Already in List =", alreadyInList)
                 dispatch(addProduct(finalData))
                 history.push('/')
             }else{
@@ -182,8 +189,8 @@ function Product() {
                     </div>
 
                     <button className="btn-sup" onClick={(e) => handleStartSubscription()}>Start Subscription</button>
-                    <div style={{ color: 'red' }}>
-                        {errors.errorMsg}
+                    <div style={{ color: 'red',marginTop:'10px' }}>
+                        <b>{errors.errorMsg}</b>
                     </div>
                 </div>
 
