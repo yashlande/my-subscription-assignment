@@ -48,14 +48,6 @@ function Product() {
         }
     ];
 
-    const [prodData, setprodData] = React.useState({
-        id: 0,
-        name: '',
-        brand: '',
-        details: '',
-        mrp: 0
-    })
-
     const [fullProdData, setFullProdData] = React.useState({
         id: 0,
         name: '',
@@ -75,12 +67,6 @@ function Product() {
     })
 
     const handleFormData = (event) => {
-        setprodData({
-            ...prodData,
-            [event.target.name]: event.target.value
-        })
-
-        // console.log("Product value = ", product_list.find(x=>x.name===event.target.value))
         setFullProdData({
             ...fullProdData,
             ...product_list.find(x => x.name === event.target.value)
@@ -172,7 +158,7 @@ function Product() {
                         <Breadcrumb />
                     </div>
                     <b>Product</b>
-                    <select name="name" value={prodData.name} onChange={(e) => handleFormData(e)} style={{ padding: '5px' }}>
+                    <select name="name" value={fullProdData.name} onChange={(e) => handleFormData(e)} style={{ padding: '5px' }}>
                         <option value='' disabled>-Select Product-</option>
                         {
                             product_list.map((i, j) => {
