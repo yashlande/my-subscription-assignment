@@ -1,41 +1,29 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Breadcrumbs, Link } from "@mui/material";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { withRouter } from "react-router-dom";
 
-function Breadcrumb() {
+function Breadcrumb(props) {
 
-    const history=useHistory()
-
+    const { history, location: { pathname } } = props;
+    // console.log("Pathname - ", pathname);
+    const pathnames = pathname.split("/").filter(x => x);
     return (
-        <div
-            style={{
-                // margin: "auto",
-                display: "table",
-            }}
-        >
+        <div>
             <Breadcrumbs separator=">" aria-label="breadcrumb">
-                <Link
-                    color="inherit"
-                    href="/"
-                    onClick={(event) => {
-                        event.preventDefault();
-                        history.push("/")
-                    }}
-                >
-                    Subscriptions
-                </Link>
-                <Link
-                    color="inherit"
-                    href="/addnew"
-                    onClick={(event) => {
-                        event.preventDefault();
-                    }}
-                >
-                    Add
-                </Link>
+                <Link onClick={() => history.push("/")}>Subscriptions</Link>
+                {
+                    pathnames.map((name, index) => {
+                        const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`
+                        const isLast = index === pathnames.length - 1;
+                        return (
+                            isLast ? <Typography key={name}>{name}</Typography> : <Link key={name} onClick={() => history.push(routeTo)}>{name}</Link>
+                        )
+                    })
+                }
             </Breadcrumbs>
         </div>
     )
 }
 
-export default Breadcrumb
+export default withRouter(Breadcrumb);
